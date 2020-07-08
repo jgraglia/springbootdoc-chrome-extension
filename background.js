@@ -113,7 +113,7 @@ function loadSinglePage(callback) {
 }
 
 function navigate(url) {
-    chrome.tabs.getSelected(null, function (tab) {
+    chrome.tabs.query({active: true}, function (tab) {
         chrome.tabs.update(tab.id, {url: url, selected: true});
     });
 }
