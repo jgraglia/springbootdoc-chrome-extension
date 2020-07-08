@@ -3,13 +3,12 @@
 // Can display 7 but need to add the "please affine your search" item
 const MAX_SUGGESTIONS = 6;
 // The site to crawl.
-const BASE_URL= "https://docs.spring.io/spring-boot/docs/1.5.x/reference/htmlsingle/index.html"
+const BASE_URL = "https://docs.spring.io/spring-boot/docs/1.5.x/reference/htmlsingle/index.html"
+const DEBUG = false;
 
-// chrome://extensions/
 var currentRequest = null;
 var loadedLinks;
 
-// https://developer.chrome.com/extensions/omnibox#type-OnInputEnteredDisposition
 chrome.omnibox.OnInputEnteredDisposition = "currentTab";
 
 /*
@@ -18,7 +17,7 @@ chrome.omnibox.OnInputEnteredDisposition = "currentTab";
  */
 chrome.omnibox.onInputChanged.addListener(
     function (text, suggest) {
-        console.debug('inputChanged: ' + text);
+        console.debug('Omnibox content: ', text);
 
         if (currentRequest != null) {
             currentRequest.onreadystatechange = null;
@@ -32,14 +31,6 @@ chrome.omnibox.onInputChanged.addListener(
                     // do not display too many suggestions
                     return;
                 }
-                if (!link.href) {
-                    console.warn('invalid link. missing href', link)
-                    return;
-                }
-                if (!link.text) {
-                    console.warn('invalid link. missing text', link)
-                    return;
-                }
                 if (link.text && link.text.toUpperCase().includes(text.toUpperCase())) {
                     suggests.push({content: link.href, description: link.text})
                     if (suggests.length == MAX_SUGGESTIONS && links.length > MAX_SUGGESTIONS) {
@@ -47,8 +38,10 @@ chrome.omnibox.onInputChanged.addListener(
                     }
                 }
             });
-            console.log('Suggests ', suggests.length, 'out of ', links.length, 'links')
-            console.table(suggests)
+            if (DEBUG) {
+                console.log('Suggests ', suggests.length, 'out of ', links.length, 'links')
+                console.table(suggests)
+            }
             suggest(suggests);
         })
 
@@ -65,27 +58,27 @@ chrome.omnibox.onInputEntered.addListener(
         navigate(BASE_URL + text)
     });
 
-function withLinks(callback) {
+function withLinks(linksLoadedCallback) {
     if (loadedLinks) {
         console.debug(loadedLinks.length, "links already loaded !");
-        callback(loadedLinks);
+        linksLoadedCallback(loadedLinks);
         return;
     }
-    console.log("Will load page then extract links...");
+    console.debug("Will load page then extract links...");
     currentRequest = loadSinglePage(function (html) {
-        console.log("html loaded...");
+        console.debug("html loaded, extracting links...");
         loadedLinks = extractLinks(html);
-        console.log(loadedLinks.length, "links loaded !");
-        callback(loadedLinks);
+        console.debug(loadedLinks.length, "links loaded !");
+        linksLoadedCallback(loadedLinks);
     });
 }
 
 function extractLinks(html) {
-    var container = document.createElement("p");
-    container.innerHTML = html;
+    var shadowContainer = document.createElement("p");
+    shadowContainer.innerHTML = html;
 
-    var anchors = container.getElementsByTagName("a");
-    var list = [];
+    var anchors = shadowContainer.getElementsByTagName("a");
+    var links = [];
 
     for (var i = 0; i < anchors.length; i++) {
         var href = anchors[i].getAttribute('href');
@@ -96,12 +89,14 @@ function extractLinks(html) {
 
             if (text === undefined) text = href
 
-            list.push({name: href, href: href, text: text});
-        } else {
-            //console.trace("no href in ", anchors[i]);
+            if (href) {
+                links.push({name: href, href: href, text: text});
+            } else {
+                console.warn('Unable to extract link from anchor ', anchors[i]);
+            }
         }
     }
-    return list;
+    return links;
 }
 
 function loadSinglePage(callback) {
@@ -118,14 +113,7 @@ function loadSinglePage(callback) {
 }
 
 function navigate(url) {
-    chrome.tabs.getSelected(null, function(tab) {
+    chrome.tabs.getSelected(null, function (tab) {
         chrome.tabs.update(tab.id, {url: url, selected: true});
     });
-    // chrome.tabs.create({
-    //     url: url
-    // });
-
-    // chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-    //     chrome.tabs.update(tabs[0].id, {url: url});
-    // });
 }
