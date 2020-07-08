@@ -2,6 +2,7 @@
 
 Google Chrome extension to search Spring Boot doc from the omnibox.
 
+![](chrome-extension-assets/springbootdoc-in-action-640x400.png)
 ## Development
 
 https://developer.chrome.com/extensions/omnibox

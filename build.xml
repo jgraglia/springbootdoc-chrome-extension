@@ -1,0 +1,14 @@
+<project name="springbootdoc" default="dist" basedir=".">
+    <property name="src" location="."/>
+    <property name="dist" location="dist"/>
+
+    <target name="dist"
+            description="generate the distribution zip">
+        <mkdir dir="${dist}/"/>
+
+        <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+        <zip zipfile="${dist}/springbootdoc.zip" basedir="${src}" includes="background.js,manifest.json,spring-boot.png"/>
+
+    </target>
+
+</project>
