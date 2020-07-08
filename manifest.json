@@ -1,0 +1,20 @@
+{
+  "name": "Spring Boot 1.5.x Reference doc search engine",
+  "description": "To use, type 'sb' plus a search term into the Omnibox.",
+  "version": "1.0",
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "permissions": [
+    "https://docs.spring.io/"
+  ],
+  "icons": {
+    "16": "spring-boot.png"
+  },
+  "omnibox": {
+    "keyword": "sb"
+  },
+  "manifest_version": 2
+}
