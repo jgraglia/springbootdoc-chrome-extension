@@ -15,7 +15,7 @@ Go to :
     chrome://extensions/
     
 activate the developper mode    
-then and load this folder.
+then load this folder.
 
 ## Development
 
