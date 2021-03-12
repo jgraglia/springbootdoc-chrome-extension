@@ -21,6 +21,18 @@ then load this folder.
 
 https://developer.chrome.com/extensions/omnibox
 
+Just run : 
+
+	$ ant
+	Buildfile: <..>/springbootdoc/build.xml
+
+	dist:
+	      [zip] Building zip: <..>/dist/springbootdoc_1.5.zip
+	      [zip] Building zip: <..>/dist/springbootdoc_2.zip
+
+	
+to build both extensions : for [Spring Boot 1.5.x](https://docs.spring.io/spring-boot/docs/1.5.x/reference/htmlsingle/index.html) doc and for [Spring Boot 2](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
+
 ## Miscellaneous
 
 Useful Chrome shortcut :
