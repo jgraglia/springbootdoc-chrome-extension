@@ -6,11 +6,13 @@
             description="generate the distribution zips">
 		<zip zipfile="${dist}/springbootdoc_1.5.zip" basedir="${src}/1.5" includes="background.js,manifest.json,spring-boot.png"/>
 		<zip zipfile="${dist}/springbootdoc_2.zip" basedir="${src}/2" includes="background.js,manifest.json,spring-boot.png"/>
+		<zip zipfile="${dist}/springbootdoc_3.zip" basedir="${src}/3" includes="background.js,manifest.json,spring-boot.png"/>
 	</target>
     
 	<target name="clean" description="cleanup generated files">
 		<delete file="${dist}/springbootdoc_1.5.zip"/>
 		<delete file="${dist}/springbootdoc_2.zip"/>
+		<delete file="${dist}/springbootdoc_3.zip"/>
 	</target>
 
 </project>

@@ -31,7 +31,7 @@ Just run :
 	      [zip] Building zip: <..>/dist/springbootdoc_2.zip
 
 	
-to build both extensions : for [Spring Boot 1.5.x](https://docs.spring.io/spring-boot/docs/1.5.x/reference/htmlsingle/index.html) doc and for [Spring Boot 2](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
+to build all extensions : for [Spring Boot 1.5.x](https://docs.spring.io/spring-boot/docs/1.5.x/reference/htmlsingle/) doc and for [Spring Boot 2](https://docs.spring.io/spring-boot/docs/2.7.17/reference/htmlsingle/) and for [Spring Boot 3](https://docs.spring.io/spring-boot/docs/3.1.5/reference/htmlsingle/)
 
 ## Miscellaneous
 
