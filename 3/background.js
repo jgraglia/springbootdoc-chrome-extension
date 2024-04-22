@@ -3,7 +3,7 @@
 // Can display 7 but need to add the "please affine your search" item
 const MAX_SUGGESTIONS = 6;
 // The site to crawl.
-const BASE_URL = "https://docs.spring.io/spring-boot/docs/3.1.5/reference/htmlsingle/"
+const BASE_URL = "https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/"
 const DEBUG = false;
 
 var currentRequest = null;
